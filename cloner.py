@@ -18,14 +18,14 @@ def batch_clone(urls_and_paths: Tuple[str, str], error_output_filename: str):
     errors = list()
     for url, path in urls_and_paths:
         status, message = clone_repo(url, path)
-        print(message, '\n')
+        print(message, "\n")
 
         if not status:
             errors.append((url, path, message))
 
     if errors:
-        with open(error_output_filename, 'w') as error_output_file:
-            HEADER = ('Url', 'Path', 'Error Message')
+        with open(error_output_filename, "w") as error_output_file:
+            HEADER = ("Url", "Path", "Error Message")
 
             csv_writer = csv.writer(error_output_file)
             csv_writer.writerow(HEADER)
@@ -34,15 +34,20 @@ def batch_clone(urls_and_paths: Tuple[str, str], error_output_filename: str):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('input_file', help='Input csv file')
-    parser.add_argument('-u', '--url-column', default='url',
-                        help='Url column name(default: url)')
-    parser.add_argument('-p', '--path-column', default='path',
-                        help='Path column name (default: path)')
-    parser.add_argument('-o', '--output-dir',
-                        help='Directory to clone to')
-    parser.add_argument('-e', '--error-output', default='error_log.csv',
-                        help='Error log file name (default: error_log.csv)')
+    parser.add_argument("input_file", help="Input csv file")
+    parser.add_argument(
+        "-u", "--url-column", default="url", help="Url column name(default: url)"
+    )
+    parser.add_argument(
+        "-p", "--path-column", default="path", help="Path column name (default: path)"
+    )
+    parser.add_argument("-o", "--output-dir", help="Directory to clone to")
+    parser.add_argument(
+        "-e",
+        "--error-output",
+        default="error_log.csv",
+        help="Error log file name (default: error_log.csv)",
+    )
     args = parser.parse_args()
 
     urls_and_paths = list()
